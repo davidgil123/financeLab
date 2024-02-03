@@ -10,9 +10,7 @@ import java.util.function.Function;
 import reactor.core.publisher.Mono;
 import software.amazon.awssdk.core.async.SdkPublisher;
 import software.amazon.awssdk.enhanced.dynamodb.*;
-import software.amazon.awssdk.enhanced.dynamodb.model.Page;
-import software.amazon.awssdk.enhanced.dynamodb.model.PagePublisher;
-import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
+import software.amazon.awssdk.enhanced.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 public abstract class TemplateAdapterOperations<E, K, V> {
@@ -28,7 +26,7 @@ public abstract class TemplateAdapterOperations<E, K, V> {
         ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
         this.dataClass = (Class<V>) genericSuperclass.getActualTypeArguments()[2];
         customerTable = dynamoDbEnhancedAsyncClient.table(tableName, TableSchema.fromBean(dataClass));
-        System.out.println(tableName);
+
         customerTableByIndex = index.length > 0 ? customerTable.index(index[0]) : null;
     }
 
@@ -36,8 +34,10 @@ public abstract class TemplateAdapterOperations<E, K, V> {
         return Mono.fromFuture(customerTable.putItem(toEntity(model)));
     }
 
-    public Mono<E> getById(K id) {
-        return Mono.fromFuture(customerTable.getItem(Key.builder().partitionValue(AttributeValue.builder().s((String) id).build()).build())).map(this::toModel);
+    public Mono<E> getById(K id, String sortKey) {
+        return Mono.fromFuture(customerTable.getItem(Key.builder().sortValue(AttributeValue.builder().s(sortKey)
+                .build()).partitionValue(AttributeValue.builder().s((String) id)
+                .build()).build())).map(this::toModel);
     }
 
     public Mono<E> delete(E model) {
@@ -49,30 +49,7 @@ public abstract class TemplateAdapterOperations<E, K, V> {
         return listOfModel(pagePublisher);
     }
 
-
-    public Mono<List<E>> queryByIndex(QueryEnhancedRequest queryExpression, String... index) {
-        DynamoDbAsyncIndex<V> queryIndex = index.length > 0 ? customerTable.index(index[0]) : customerTableByIndex;
-
-        SdkPublisher<Page<V>> pagePublisher = queryIndex.query(queryExpression);
-        return listOfModel(pagePublisher);
-    }
-
-    /**
-     * @return Mono<List < E>>
-     * @implNote Bancolombia does not suggest the Scan function for DynamoDB tables due to the low performance resulting from the design of the database engine (Key value). Optimize the query using Query, GetItem or BatchGetItem functions, and if necessary, consider the Single-Table Design pattern for DynamoDB.
-     * @deprecated
-     */
-    @Deprecated(forRemoval = true)
-    public Mono<List<E>> scan() {
-        PagePublisher<V> pagePublisher = customerTable.scan();
-        return listOfModel(pagePublisher);
-    }
-
     private Mono<List<E>> listOfModel(PagePublisher<V> pagePublisher) {
-        return Mono.from(pagePublisher).map(page -> page.items().stream().map(this::toModel).toList());
-    }
-
-    private Mono<List<E>> listOfModel(SdkPublisher<Page<V>> pagePublisher) {
         return Mono.from(pagePublisher).map(page -> page.items().stream().map(this::toModel).toList());
     }
 

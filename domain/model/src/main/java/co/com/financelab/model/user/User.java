@@ -19,7 +19,6 @@ public class User {
     private String city;
     private String birthdayDate;
     private String password;
-    private List<Object> actions;
     private String financeLabId;
 
 }

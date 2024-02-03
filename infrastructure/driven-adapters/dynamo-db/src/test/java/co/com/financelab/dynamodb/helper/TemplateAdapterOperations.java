@@ -1,7 +1,7 @@
 package co.com.financelab.dynamodb.helper;
 
-import co.com.financelab.dynamodb.DynamoDBTemplateAdapter;
-import co.com.financelab.dynamodb.ModelEntity;
+import co.com.financelab.dynamodb.DynamoDBTemplateAdapterUser;
+import co.com.financelab.dynamodb.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -28,25 +28,25 @@ class TemplateAdapterOperationsTest {
     private ObjectMapper mapper;
 
     @Mock
-    private DynamoDbAsyncTable<ModelEntity> customerTable;
+    private DynamoDbAsyncTable<UserEntity> customerTable;
 
-    private ModelEntity modelEntity;
+    private UserEntity modelEntity;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        when(dynamoDbEnhancedAsyncClient.table("table_name", TableSchema.fromBean(ModelEntity.class)))
+        when(dynamoDbEnhancedAsyncClient.table("table_name", TableSchema.fromBean(UserEntity.class)))
                 .thenReturn(customerTable);
 
-        modelEntity = new ModelEntity();
+        modelEntity = new UserEntity();
         modelEntity.setId("id");
         modelEntity.setAtr1("atr1");
     }
 
     @Test
     void modelEntityPropertiesMustNotBeNull() {
-        ModelEntity modelEntityUnderTest = new ModelEntity("id", "atr1");
+        UserEntity modelEntityUnderTest = new UserEntity("id", "atr1");
 
         assertNotNull(modelEntityUnderTest.getId());
         assertNotNull(modelEntityUnderTest.getAtr1());
@@ -55,12 +55,12 @@ class TemplateAdapterOperationsTest {
     @Test
     void testSave() {
         when(customerTable.putItem(modelEntity)).thenReturn(CompletableFuture.runAsync(()->{}));
-        when(mapper.map(modelEntity, ModelEntity.class)).thenReturn(modelEntity);
+        when(mapper.map(modelEntity, UserEntity.class)).thenReturn(modelEntity);
 
-        DynamoDBTemplateAdapter dynamoDBTemplateAdapter =
-                new DynamoDBTemplateAdapter(dynamoDbEnhancedAsyncClient, mapper);
+        DynamoDBTemplateAdapterUser dynamoDBTemplateAdapterUser =
+                new DynamoDBTemplateAdapterUser(dynamoDbEnhancedAsyncClient, mapper);
 
-        StepVerifier.create(dynamoDBTemplateAdapter.save(modelEntity))
+        StepVerifier.create(dynamoDBTemplateAdapterUser.save(modelEntity))
                 .expectNextCount(0)
                 .verifyComplete();
     }
@@ -74,26 +74,26 @@ class TemplateAdapterOperationsTest {
                 .thenReturn(CompletableFuture.completedFuture(modelEntity));
         when(mapper.map(modelEntity, Object.class)).thenReturn("value");
 
-        DynamoDBTemplateAdapter dynamoDBTemplateAdapter =
-                new DynamoDBTemplateAdapter(dynamoDbEnhancedAsyncClient, mapper);
+        DynamoDBTemplateAdapterUser dynamoDBTemplateAdapterUser =
+                new DynamoDBTemplateAdapterUser(dynamoDbEnhancedAsyncClient, mapper);
 
-        StepVerifier.create(dynamoDBTemplateAdapter.getById("id"))
+        StepVerifier.create(dynamoDBTemplateAdapterUser.getById("id"))
                 .expectNext("value")
                 .verifyComplete();
     }
 
     @Test
     void testDelete() {
-        when(mapper.map(modelEntity, ModelEntity.class)).thenReturn(modelEntity);
+        when(mapper.map(modelEntity, UserEntity.class)).thenReturn(modelEntity);
         when(mapper.map(modelEntity, Object.class)).thenReturn("value");
 
         when(customerTable.deleteItem(modelEntity))
                 .thenReturn(CompletableFuture.completedFuture(modelEntity));
 
-        DynamoDBTemplateAdapter dynamoDBTemplateAdapter =
-                new DynamoDBTemplateAdapter(dynamoDbEnhancedAsyncClient, mapper);
+        DynamoDBTemplateAdapterUser dynamoDBTemplateAdapterUser =
+                new DynamoDBTemplateAdapterUser(dynamoDbEnhancedAsyncClient, mapper);
 
-        StepVerifier.create(dynamoDBTemplateAdapter.delete(modelEntity))
+        StepVerifier.create(dynamoDBTemplateAdapterUser.delete(modelEntity))
                 .expectNext("value")
                 .verifyComplete();
     }

@@ -13,6 +13,7 @@ spring:
       path: "/h2"
   profiles:
     include: null
+    active: local
 management:
   endpoints:
     web:
@@ -46,7 +47,7 @@ routes:
     createSubcategories: "/subcategory"
 aws:
   dynamodb:
-    endpoint: "http://localhost:8000"
+    endpoint: "http://localhost:8010"
     threads: "10"
     tableName: "FinanceLab_user"
   region: "us-east-1"

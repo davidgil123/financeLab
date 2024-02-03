@@ -11,7 +11,7 @@ import java.util.List;
 @DynamoDbBean
 @Setter
 @Getter
-public class ModelEntity {
+public class UserEntity {
     private String userId;
     private String name;
     private String lastName;
@@ -22,13 +22,12 @@ public class ModelEntity {
     private String city;
     private String birthdayDate;
     private String password;
-    private List<Object> actions;
     private String financeLabId;
 
-    public ModelEntity() {
+    public UserEntity() {
     }
 
-    public ModelEntity(String userId, String name, String lastName, String documentType, String documentNumber, String email, String country, String city, String birthdayDate, String password, List<Object> actions, String financeLabId) {
+    public UserEntity(String userId, String name, String lastName, String documentType, String documentNumber, String email, String country, String city, String birthdayDate, String password, String financeLabId) {
         this.userId = userId;
         this.name = name;
         this.lastName = lastName;
@@ -39,7 +38,6 @@ public class ModelEntity {
         this.city = city;
         this.birthdayDate = birthdayDate;
         this.password = password;
-        this.actions = actions;
         this.financeLabId = financeLabId;
     }
 
