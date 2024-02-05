@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
-import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
-import software.amazon.awssdk.enhanced.dynamodb.model.UpdateItemEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.List;
@@ -57,9 +55,14 @@ public class DynamoDBTemplateAdapterUser extends TemplateAdapterOperations<User,
     }
 
     @Override
-    public Mono<Boolean> deleteUser(String financelab, String userId) {
+    public Mono<Boolean> deleteUser(String financelab  , String userId) {
 
         return super.getById(financelab, userId).flatMap(super::delete).thenReturn(true);
+    }
+    public Mono<List<User>> getAllIncomes(String financelab, String userId){
+        var queryConditional = generateQueryExpression(financelab);
+
+        return super.query(queryConditional);
     }
 
 }

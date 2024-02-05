@@ -25,7 +25,7 @@ public class ListerUseCase {
     public Mono<List<User>> getAllUser(String financeLab){
         return userRepository.getAllUser(financeLab);
     }
-    public Mono<List<Income>> getAllIncome(String financeLab){
-        return userRepository.getAllIncome(financeLab);
+    public Mono<List<Income>> getAllIncome(String financeLab, String userId){
+        return incomeRepository.getAllIncomes(String financeLab, String userId);
     }
 }

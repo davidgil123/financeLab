@@ -1,5 +1,6 @@
 package co.com.financelab.api.util;
 
+import co.com.financelab.model.income.Income;
 import co.com.financelab.model.user.User;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -23,5 +24,8 @@ public class ResponseUtil {
     }
     public Mono<ServerResponse> buildResponseDeleteUser(Boolean result){
         return ServerResponse.ok().bodyValue(result);
+    }
+    public Mono<ServerResponse> buildResponseAllIncome(List<Income> incomeList){
+        return ServerResponse.ok().bodyValue(incomeList);
     }
 }

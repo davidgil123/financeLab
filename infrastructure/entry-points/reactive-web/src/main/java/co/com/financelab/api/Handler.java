@@ -35,7 +35,8 @@ public class Handler {
 
     //Incomes -> Acciones que se pueden ejecutar sobre los incomes
     public Mono<ServerResponse> getAllIncomes(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+
+        return RequestUtil.buildGetAllIncome(serverRequest).flatMap(listerUseCase::getAllIncome).flatMap(ResponseUtil::buildResponseAllIncome);
     }
     public Mono<ServerResponse> createIncome(ServerRequest serverRequest) {
         return ServerResponse.ok().bodyValue("");

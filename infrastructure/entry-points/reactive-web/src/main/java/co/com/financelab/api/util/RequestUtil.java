@@ -21,4 +21,12 @@ public class RequestUtil {
         return Mono.just(UserDeleteRequest.builder().financeLabId(serverRequest.headers().firstHeader("finance-lab"))
                 .userId(serverRequest.pathVariable("id")).build());
     }
+    public Mono<String> buildGetAllIncomes(ServerRequest serverRequest){
+
+        return Mono.just(serverRequest.headers().firstHeader("finance-lab"));
+    }
+
+    public static <T> Mono<T> buildGetAllIncome(ServerRequest serverRequest) {
+        return (Mono<T>) Mono.just(serverRequest.headers().firstHeader("finance-lab"));
+    }
 }
