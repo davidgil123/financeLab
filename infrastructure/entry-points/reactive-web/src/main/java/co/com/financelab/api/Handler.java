@@ -21,7 +21,7 @@ public class Handler {
     private final UpdaterUseCase updaterUseCase;
     private final DeleterUseCase deleterUseCase;
     public Mono<ServerResponse> getAllUsers(ServerRequest serverRequest) {
-        return RequestUtil.buildGetAllUser(serverRequest).flatMap(listerUseCase::getAllUser).flatMap(ResponseUtil::buildResponseAllUser);
+        return RequestUtil.buildGetAllUser(serverRequest).flatMap(listerUseCase::getAllUsers).flatMap(ResponseUtil::buildResponseAllUser);
     }
     public Mono<ServerResponse> createUser(ServerRequest serverRequest) {
         return RequestUtil.buidCreateUser(serverRequest).flatMap(creatorUseCase::createUser).flatMap(ResponseUtil::buildResponseCreateUser);
@@ -35,61 +35,70 @@ public class Handler {
 
     //Incomes -> Acciones que se pueden ejecutar sobre los incomes
     public Mono<ServerResponse> getAllIncomes(ServerRequest serverRequest) {
-
-        return RequestUtil.buildGetAllIncome(serverRequest).flatMap(listerUseCase::getAllIncome).flatMap(ResponseUtil::buildResponseAllIncome);
+        return RequestUtil.buildGetAllIncome(serverRequest).flatMap(listerUseCase::getAllIncomes).flatMap(ResponseUtil::buildResponseAllIncome);
     }
     public Mono<ServerResponse> createIncome(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+
+        return RequestUtil.buidCreateIncome(serverRequest).flatMap(creatorUseCase::createIncome).flatMap(ResponseUtil::buildResponseCreateIncome);
     }
     public Mono<ServerResponse> updateIncome(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+
+        return RequestUtil.buildUpdateIncome(serverRequest).flatMap(updaterUseCase::updateIncome).flatMap(ResponseUtil::buildResponseUpdateIncome);
     }
     public Mono<ServerResponse> deleteIncome(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+
+        return RequestUtil.buildDeleteIncome(serverRequest).flatMap(deleterUseCase::deleteIncome).flatMap(ResponseUtil::buildResponseDeleteIncome);
     }
 
     //Expenses -> Acciones que se pueden ejecutar sobre los Expenses
     public Mono<ServerResponse> getAllExpenses(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+        return RequestUtil.buildGetAllExpense(serverRequest).flatMap(listerUseCase::getAllExpenses).flatMap(ResponseUtil::buildResponseAllExpense);
     }
-    public Mono<ServerResponse> createExpenses(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> createExpense(ServerRequest serverRequest) {
+
+        return RequestUtil.buidCreateExpense(serverRequest).flatMap(creatorUseCase::createExpense).flatMap(ResponseUtil::buildResponseCreateExpense);
     }
-    public Mono<ServerResponse> updateExpenses(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> updateExpense(ServerRequest serverRequest) {
+
+        return RequestUtil.buildUpdateExpense(serverRequest).flatMap(updaterUseCase::updateExpense).flatMap(ResponseUtil::buildResponseUpdateExpense);
     }
-    public Mono<ServerResponse> deleteExpenses(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> deleteExpense(ServerRequest serverRequest) {
+
+        return RequestUtil.buildDeleteExpense(serverRequest).flatMap(deleterUseCase::deleteExpense).flatMap(ResponseUtil::buildResponseDeleteExpense);
     }
 
     //Goals -> Acciones que se pueden ejecutar sobre los Goals
     public Mono<ServerResponse> getAllGoals(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+
+        return RequestUtil.buildGetAllGoal(serverRequest).flatMap(listerUseCase::getAllGoals).flatMap(ResponseUtil::buildResponseAllGoal);
     }
-    public Mono<ServerResponse> createGoals(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> createGoal(ServerRequest serverRequest) {
+
+        return RequestUtil.buidCreateGoal(serverRequest).flatMap(creatorUseCase::createGoal).flatMap(ResponseUtil::buildResponseCreateGoal);
     }
-    public Mono<ServerResponse> updateGoals(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> updateGoal(ServerRequest serverRequest) {
+
+        return RequestUtil.buildUpdateGoal(serverRequest).flatMap(updaterUseCase::updateGoal).flatMap(ResponseUtil::buildResponseUpdateGoal);
     }
-    public Mono<ServerResponse> deleteGoals(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> deleteGoal(ServerRequest serverRequest) {
+
+        return RequestUtil.buildDeleteGoal(serverRequest).flatMap(deleterUseCase::deleteGoal).flatMap(ResponseUtil::buildResponseDeleteGoal);
     }
 
     //Categories -> Acciones que se pueden ejecutar sobre los Categories
     public Mono<ServerResponse> getAllCategories(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+        return RequestUtil.buildGetAllCategory(serverRequest).flatMap(listerUseCase::getAllCategories).flatMap(ResponseUtil::buildResponseAllCategory);
     }
-    public Mono<ServerResponse> createCategories(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> createCategory(ServerRequest serverRequest) {
+        return RequestUtil.buildCreateCategory(serverRequest).flatMap(creatorUseCase::createCategory).flatMap(ResponseUtil::buildResponseCreateCategory);
     }
 
     //Subcategories -> Acciones que se pueden ejecutar sobre los Subcategories
     public Mono<ServerResponse> getAllSubcategories(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+        return RequestUtil.buildGetAllSubcategories(serverRequest).flatMap(listerUseCase::getAllSubcategories).flatMap(ResponseUtil::buildResponseGetAllSubcategories);
     }
-    public Mono<ServerResponse> createSubcategories(ServerRequest serverRequest) {
-        return ServerResponse.ok().bodyValue("");
+    public Mono<ServerResponse> createSubcategory(ServerRequest serverRequest) {
+        return RequestUtil.buidCreateSubcategory(serverRequest).flatMap(creatorUseCase::createSubcategory).flatMap(ResponseUtil::buildResponseCreateSubcategory);
     }
 
 }

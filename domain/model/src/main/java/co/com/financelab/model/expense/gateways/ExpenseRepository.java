@@ -7,8 +7,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public interface ExpenseRepository {
-    Mono<List<Expense>> getAllExpenses(String finnanceLab, String userId);
-    Mono<Expense> createExpense(String finnanceLab, String userId, Expense expense);
-    Mono<Expense> updateExpense(String finnanceLab, String userId, String expenseId);
-    Mono<Boolean> deleteExpense(String finnanceLab, String userId, String expenseId);
+    Mono<List<Expense>> getAllExpenses(String userId);
+    Mono<Expense> createExpense(Expense expense);
+    Mono<Expense> updateExpense(Expense expense);
+    Mono<Boolean> deleteExpense(String userId, String expenseId);
 }

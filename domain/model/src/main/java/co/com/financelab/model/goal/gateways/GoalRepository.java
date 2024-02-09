@@ -7,8 +7,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public interface GoalRepository {
-    Mono<List<Goal>> getAllGoals(String finnanceLab, String userId);
-    Mono<Goal> createGoal(String finnanceLab, String userId, Goal goal);
-    Mono<Goal> updateGoal(String finnanceLab, String userId, String goalId);
-    Mono<Boolean> deleteGoal(String finnanceLab, String userId, String goalId);
+    Mono<List<Goal>> getAllGoals(String userId);
+    Mono<Goal> createGoal(Goal goal);
+    Mono<Goal> updateGoal(Goal goal);
+    Mono<Boolean> deleteGoal(String userId, String goalId);
 }

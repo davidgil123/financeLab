@@ -10,29 +10,29 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @ConfigurationProperties(prefix = "routes.paths")
 public class FinanceRoute {
-    private String listUser;
+    private String listUsers;
     private String createUser;
     private String updateUser;
     private String deleteUser;
 
     private String listIncomes;
-    private String createIncomes;
-    private String updateIncomes;
-    private String deleteIncomes;
+    private String createIncome;
+    private String updateIncome;
+    private String deleteIncome;
 
     private String listExpenses;
-    private String createExpenses;
-    private String updateExpenses;
-    private String deleteExpenses;
+    private String createExpense;
+    private String updateExpense;
+    private String deleteExpense;
 
     private String listGoals;
-    private String createGoals;
-    private String updateGoals;
-    private String deleteGoals;
+    private String createGoal;
+    private String updateGoal;
+    private String deleteGoal;
 
     private String listCategories;
-    private String createCategories;
+    private String createCategory;
 
     private String listSubcategories;
-    private String createSubcategories;
+    private String createSubcategory;
 }

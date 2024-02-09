@@ -1,4 +1,4 @@
-package co.com.financelab.dynamodb;
+package co.com.financelab.dynamodb.user;
 
 import lombok.Getter;
 import lombok.Setter;

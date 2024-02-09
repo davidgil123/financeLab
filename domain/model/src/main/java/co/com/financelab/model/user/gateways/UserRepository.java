@@ -11,5 +11,4 @@ public interface UserRepository {
     Mono<User> createUser(User user);
     Mono<User> updateUser(User user);
     Mono<Boolean> deleteUser(String financelab, String userId);
-    Mono<List<Income>> getAllIncome(String financeLab);
 }

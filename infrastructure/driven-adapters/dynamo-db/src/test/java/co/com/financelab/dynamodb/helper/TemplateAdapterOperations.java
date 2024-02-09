@@ -1,7 +1,7 @@
 package co.com.financelab.dynamodb.helper;
 
-import co.com.financelab.dynamodb.DynamoDBTemplateAdapterUser;
-import co.com.financelab.dynamodb.UserEntity;
+import co.com.financelab.dynamodb.user.DynamoDBTemplateAdapterUser;
+import co.com.financelab.dynamodb.user.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

@@ -1,16 +1,15 @@
 package co.com.financelab.model.expense;
-import lombok.Builder;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 //import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Expense {
+    private String userId;
     private String expenseId;
     private String date;
     private String amount;

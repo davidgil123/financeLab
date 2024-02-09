@@ -1,6 +1,8 @@
-package co.com.financelab.dynamodb;
+package co.com.financelab.dynamodb.income;
 
 import co.com.financelab.dynamodb.helper.TemplateAdapterOperations;
+import co.com.financelab.model.income.Income;
+import co.com.financelab.model.income.gateways.IncomeRepository;
 import co.com.financelab.model.user.User;
 import co.com.financelab.model.user.gateways.UserRepository;
 import org.reactivecommons.utils.ObjectMapper;
@@ -17,12 +19,12 @@ import java.util.List;
 
 
 @Repository
-public class DynamoDBTemplateAdapterUser extends TemplateAdapterOperations<User, String, UserEntity> implements UserRepository {
+public class DynamoDBTemplateAdapterIncome extends TemplateAdapterOperations<Income, String, IncomeEntity> implements IncomeRepository {
 
     private static final String SORT_KEY= "\u0000";
-    public DynamoDBTemplateAdapterUser(DynamoDbEnhancedAsyncClient connectionFactory, ObjectMapper mapper, @Value("${aws.dynamodb.tableName}") String tableName) {
+    public DynamoDBTemplateAdapterIncome(DynamoDbEnhancedAsyncClient connectionFactory, ObjectMapper mapper, @Value("${aws.dynamodb.tableNameIncome}") String tableName) {
 
-        super(connectionFactory, mapper, d -> mapper.map(d,User.class), tableName);
+        super(connectionFactory, mapper, d -> mapper.map(d,Income.class), tableName);
     }
 
     private QueryEnhancedRequest generateQueryExpression(String partitionKey) {
@@ -35,34 +37,29 @@ public class DynamoDBTemplateAdapterUser extends TemplateAdapterOperations<User,
     }
 
     @Override
-    public Mono<List<User>> getAllUser(String financeLab) {
+    public Mono<List<Income>> getAllIncome(String userId) {
 
-        var queryConditional = generateQueryExpression(financeLab);
-
-        return super.query(queryConditional);
-    }
-
-    @Override
-    public Mono<User> createUser(User user) {
-
-        return super.save(user).thenReturn(user);
-    }
-
-    @Override
-    public Mono<User> updateUser(User user) {
-
-        return super.save(user).thenReturn(user);
-    }
-
-    @Override
-    public Mono<Boolean> deleteUser(String financelab  , String userId) {
-
-        return super.getById(financelab, userId).flatMap(super::delete).thenReturn(true);
-    }
-    public Mono<List<User>> getAllIncomes(String financelab, String userId){
-        var queryConditional = generateQueryExpression(financelab);
+        var queryConditional = generateQueryExpression(userId);
 
         return super.query(queryConditional);
+    }
+
+    @Override
+    public Mono<Income> createIncome(Income income) {
+
+        return super.save(income).thenReturn(income);
+    }
+
+    @Override
+    public Mono<Income> updateIncome(Income income) {
+
+        return super.save(income).thenReturn(income);
+    }
+
+    @Override
+    public Mono<Boolean> deleteIncome(String userId, String incomeId) {
+
+        return super.getById(userId, incomeId).flatMap(super::delete).thenReturn(true);
     }
 
 }

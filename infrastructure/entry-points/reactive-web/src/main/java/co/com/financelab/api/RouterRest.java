@@ -18,31 +18,30 @@ public class RouterRest {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
-        return route(GET(financeRoute.getListUser()), handler::getAllUsers)
+        return route(GET(financeRoute.getListUsers()), handler::getAllUsers)
                 .andRoute(POST(financeRoute.getCreateUser()), handler::createUser)
                 .andRoute(PATCH(financeRoute.getUpdateUser()), handler::updateUser)
                 .andRoute(DELETE(financeRoute.getDeleteUser()), handler::deleteUser)
 
                 .andRoute(GET(financeRoute.getListIncomes()), handler::getAllIncomes)
-                .andRoute(POST(financeRoute.getCreateIncomes()), handler::createIncome)
-                .andRoute(PATCH(financeRoute.getUpdateIncomes()), handler::updateIncome)
-                .andRoute(DELETE(financeRoute.getDeleteIncomes()), handler::deleteIncome)
+                .andRoute(POST(financeRoute.getCreateIncome()), handler::createIncome)
+                .andRoute(PATCH(financeRoute.getUpdateIncome()), handler::updateIncome)
+                .andRoute(DELETE(financeRoute.getDeleteIncome()), handler::deleteIncome)
 
                 .andRoute(GET(financeRoute.getListExpenses()), handler::getAllExpenses)
-                .andRoute(POST(financeRoute.getCreateExpenses()), handler::createExpenses)
-                .andRoute(PATCH(financeRoute.getUpdateExpenses()), handler::updateExpenses)
-                .andRoute(DELETE(financeRoute.getDeleteExpenses()), handler::deleteExpenses)
+                .andRoute(POST(financeRoute.getCreateExpense()), handler::createExpense)
+                .andRoute(PATCH(financeRoute.getUpdateExpense()), handler::updateExpense)
+                .andRoute(DELETE(financeRoute.getDeleteExpense()), handler::deleteExpense)
 
                 .andRoute(GET(financeRoute.getListGoals()), handler::getAllGoals)
-                .andRoute(POST(financeRoute.getCreateGoals()), handler::createGoals)
-                .andRoute(PATCH(financeRoute.getUpdateGoals()), handler::updateGoals)
-                .andRoute(DELETE(financeRoute.getDeleteGoals()), handler::deleteGoals)
+                .andRoute(POST(financeRoute.getCreateGoal()), handler::createGoal)
+                .andRoute(PATCH(financeRoute.getUpdateGoal()), handler::updateGoal)
+                .andRoute(DELETE(financeRoute.getDeleteGoal()), handler::deleteGoal)
 
                 .andRoute(GET(financeRoute.getListCategories()), handler::getAllCategories)
-                .andRoute(POST(financeRoute.getCreateCategories()), handler::createCategories)
+                .andRoute(POST(financeRoute.getCreateCategory()), handler::createCategory)
 
                 .andRoute(GET(financeRoute.getListSubcategories()), handler::getAllSubcategories)
-                .andRoute(POST(financeRoute.getCreateSubcategories()), handler::createSubcategories)
-                ;
+                .andRoute(POST(financeRoute.getCreateSubcategory()), handler::createSubcategory);
     }
 }
