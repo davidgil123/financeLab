@@ -45,6 +45,8 @@ routes:
     createCategory: "/category"
     listSubcategories: "/subcategories"
     createSubcategory: "/subcategory"
+    downloadFile: "/download-report"
+    sendEmail: "/send-email"
 aws:
   dynamodb:
     endpoint: "http://localhost:8010"

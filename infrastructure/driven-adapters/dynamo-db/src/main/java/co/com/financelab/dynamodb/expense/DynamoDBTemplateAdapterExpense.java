@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
+import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -28,6 +31,7 @@ public class DynamoDBTemplateAdapterExpense extends TemplateAdapterOperations<Ex
     }
 
     private QueryEnhancedRequest generateQueryExpression(String partitionKey) {
+
         var queryConditional = QueryConditional.sortGreaterThanOrEqualTo(Key.builder()
                 .partitionValue(AttributeValue.builder().s(partitionKey).build())
                 .sortValue(AttributeValue.builder().s(SORT_KEY).build()).build());
@@ -61,5 +65,23 @@ public class DynamoDBTemplateAdapterExpense extends TemplateAdapterOperations<Ex
 
         return super.getById(userId, expenseId).flatMap(super::delete).thenReturn(true);
     }
+    private Expression applyDateFilter(String date){
+        return Expression.builder()
+                .expression("contains (#date, :keyword)")
+                .expressionNames(Map.of("#date", "date"))
+                .expressionValues(Map.of(":keyword", AttributeValue.builder()
+                        .s(date).build())).build();
+    }
+    @Override
+    public Mono<List<Expense>> getAllExpensesByMonth(String userId, String date) {
+        var expression= applyDateFilter(date);
+        var queryConditional = generateQueryExpression(userId).toBuilder()
+                .filterExpression(expression)
+                .build();
+
+        return super.query(queryConditional);
+    }
+
+
 
 }

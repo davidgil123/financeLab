@@ -1,6 +1,8 @@
 package co.com.financelab.api.util;
 
 import co.com.financelab.model.category.Category;
+import co.com.financelab.model.email.FinanceLabEmail;
+import co.com.financelab.model.email.gateway.EmailGateways;
 import co.com.financelab.model.expense.Expense;
 import co.com.financelab.model.expense.gateways.ExpenseDeleteRequest;
 import co.com.financelab.model.goal.Goal;
@@ -10,6 +12,7 @@ import co.com.financelab.model.income.IncomeDeleteRequest;
 import co.com.financelab.model.subcategory.Subcategory;
 import co.com.financelab.model.subcategory.SubcategoryRequest;
 import co.com.financelab.model.user.User;
+import co.com.financelab.model.user.UserCreateReport;
 import co.com.financelab.model.user.UserDeleteRequest;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -103,6 +106,24 @@ public class RequestUtil {
                 .categoryId(serverRequest.headers().firstHeader("category-id"))
                 .userId(serverRequest.headers().firstHeader("user-id"))
                 .value(serverRequest.headers().firstHeader("subcategory-value")).build());
+    }
+    public Mono<UserCreateReport> buildGenerateFile(ServerRequest serverRequest){
+
+        return Mono.just(UserCreateReport.builder()
+                .userId(serverRequest.headers().firstHeader("user-id"))
+                .month(serverRequest.headers().firstHeader("month"))
+                .year(serverRequest.headers().firstHeader("year")).build());
+    }
+    //ENVIO DE CORREO:
+    public Mono<FinanceLabEmail> buildSendEmail(ServerRequest serverRequest){
+
+        return serverRequest.bodyToMono(byte[].class)
+                .map(file->
+          FinanceLabEmail.builder()
+                    .userId(serverRequest.headers().firstHeader("user-id"))
+                    .financeLabId(serverRequest.headers().firstHeader("finance-lab"))
+                    .file(file).build()
+        );
     }
 
 

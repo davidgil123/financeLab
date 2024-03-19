@@ -4,7 +4,9 @@ import co.com.financelab.api.util.RequestUtil;
 import co.com.financelab.api.util.ResponseUtil;
 import co.com.financelab.usecase.creator.CreatorUseCase;
 import co.com.financelab.usecase.deleter.DeleterUseCase;
+import co.com.financelab.usecase.generatorfile.GeneratorFileUseCase;
 import co.com.financelab.usecase.lister.ListerUseCase;
+import co.com.financelab.usecase.senderemail.SenderEmailUseCase;
 import co.com.financelab.usecase.updater.UpdaterUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public class Handler {
     private final CreatorUseCase creatorUseCase;
     private final UpdaterUseCase updaterUseCase;
     private final DeleterUseCase deleterUseCase;
+    private final GeneratorFileUseCase generatorFileUseCase;
+    private final SenderEmailUseCase senderEmailUseCase;
     public Mono<ServerResponse> getAllUsers(ServerRequest serverRequest) {
         return RequestUtil.buildGetAllUser(serverRequest).flatMap(listerUseCase::getAllUsers).flatMap(ResponseUtil::buildResponseAllUser);
     }
@@ -100,5 +104,17 @@ public class Handler {
     public Mono<ServerResponse> createSubcategory(ServerRequest serverRequest) {
         return RequestUtil.buidCreateSubcategory(serverRequest).flatMap(creatorUseCase::createSubcategory).flatMap(ResponseUtil::buildResponseCreateSubcategory);
     }
+
+    //Descarga -> Accion para descarga del archivo consolidado
+    public Mono<ServerResponse> getGenerateFile(ServerRequest serverRequest) {
+        return RequestUtil.buildGenerateFile(serverRequest).flatMap(generatorFileUseCase::generateFile).
+                flatMap(ResponseUtil::buildResponseGenerateFile);
+    }
+    //Enviar email -> Accion para enviar el archivo consolidado al correo del usuario
+    public Mono<ServerResponse> getSendEmail(ServerRequest serverRequest) {
+        return RequestUtil.buildSendEmail(serverRequest).flatMap(senderEmailUseCase::sendEmail)
+                .flatMap(ResponseUtil::buildResponseSendEmail);
+    }
+
 
 }

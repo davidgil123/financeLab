@@ -100,4 +100,11 @@ public class ResponseUtil {
     public Mono<ServerResponse> buildResponseCreateSubcategory(String subcategory) {
         return ServerResponse.status(201).bodyValue(subcategory);
     }
+    public Mono<ServerResponse> buildResponseGenerateFile(byte[] fileReport) {
+        return ServerResponse.ok().bodyValue(fileReport);
+    }
+
+    public Mono<ServerResponse> buildResponseSendEmail(boolean isOk) {
+        return ServerResponse.ok().bodyValue(isOk);
+    }
 }

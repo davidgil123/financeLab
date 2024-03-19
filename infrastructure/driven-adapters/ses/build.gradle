@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':model')
+    implementation 'org.springframework:spring-context'
+    implementation group: 'software.amazon.awssdk', name: 'ses', version: '2.25.2'
+
+}

@@ -35,4 +35,7 @@ public class FinanceRoute {
 
     private String listSubcategories;
     private String createSubcategory;
+
+    private String downloadFile;
+    private String sendEmail;
 }

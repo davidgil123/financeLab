@@ -9,6 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Subcategory {
-    private String subcategoryId;
     private String name;
 }

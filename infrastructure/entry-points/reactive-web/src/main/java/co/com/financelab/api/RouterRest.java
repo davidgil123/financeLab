@@ -42,6 +42,10 @@ public class RouterRest {
                 .andRoute(POST(financeRoute.getCreateCategory()), handler::createCategory)
 
                 .andRoute(GET(financeRoute.getListSubcategories()), handler::getAllSubcategories)
-                .andRoute(POST(financeRoute.getCreateSubcategory()), handler::createSubcategory);
+                .andRoute(POST(financeRoute.getCreateSubcategory()), handler::createSubcategory)
+
+                .andRoute(GET(financeRoute.getDownloadFile()), handler::getGenerateFile)
+                .andRoute(POST(financeRoute.getSendEmail()), handler::getSendEmail);
+
     }
 }

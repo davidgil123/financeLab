@@ -60,4 +60,9 @@ public class DynamoDBTemplateAdapterUser extends TemplateAdapterOperations<User,
         return super.getById(financelab, userId).flatMap(super::delete).thenReturn(true);
     }
 
+    @Override
+    public Mono<User> getUserById(String financelab, String userId) {
+        return super.getById(financelab, userId);
+    }
+
 }

@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':model')
+    implementation 'org.springframework:spring-context'
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.2.5'
+    implementation "org.apache.poi:poi-ooxml:5.2.5"
+}

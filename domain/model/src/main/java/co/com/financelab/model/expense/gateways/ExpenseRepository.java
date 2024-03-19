@@ -11,4 +11,5 @@ public interface ExpenseRepository {
     Mono<Expense> createExpense(Expense expense);
     Mono<Expense> updateExpense(Expense expense);
     Mono<Boolean> deleteExpense(String userId, String expenseId);
+    Mono<List<Expense>> getAllExpensesByMonth(String userId, String date);
 }
